@@ -22,7 +22,6 @@ from scipy import stats
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-#%%
 def prep_data(data, covariates, data_start, train = True):
     #print("train: ", train)
     time_len = data.shape[0]
