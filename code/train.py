@@ -23,15 +23,15 @@ logger = logging.getLogger('DeepAR.Train')
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--dataset', default='elect', help='Name of the dataset')
-parser.add_argument('--data-folder', default='/home/ethorondor/Dropbox/Research/DeepAR/data', help='Parent dir of the dataset')
-parser.add_argument('--model-name', default='/home/ethorondor/Dropbox/Research/DeepAR/code/experiments/base_model', help='Directory containing params.json')
+parser.add_argument('--data-folder', default='/mnt/File/Data', help='Parent dir of the dataset')
+parser.add_argument('--model-name', default='/home/ethorondor/Documents/Github/DeepAR/code/experiments/base_model', help='Directory containing params.json')
 parser.add_argument('--relative-metrics', action='store_true', help='Whether to normalize the metrics by label scales')
 parser.add_argument('--sampling', action='store_true', help='Whether to sample during evaluation')
 parser.add_argument('--save-best', action='store_true', help='Whether to save best ND to param_search.txt')
 parser.add_argument('--restore-file', default=None,
                     help='Optional, name of the file in --model_dir containing weights to reload before \
                     training')  # 'best' or 'epoch_#'
-#%%
+
 
 def train(model: nn.Module,
           optimizer: optim,
@@ -40,7 +40,8 @@ def train(model: nn.Module,
           test_loader: DataLoader,
           params: utils.Params,
           epoch: int) -> float:
-    '''Train the model on one epoch by batches.
+    '''
+    Train the model on one epoch by batches.
     Args:
         model: (torch.nn.Module) the neural network
         optimizer: (torch.optim) optimizer for parameters of model
@@ -95,7 +96,8 @@ def train_and_evaluate(model: nn.Module,
                        optimizer: optim, loss_fn,
                        params: utils.Params,
                        restore_file: str = None) -> None:
-    '''Train the model and evaluate every epoch.
+    '''
+    Train the model and evaluate every epoch.
     Args:
         model: (torch.nn.Module) the Deep AR model
         train_loader: load train data and labels
@@ -222,3 +224,5 @@ if __name__ == '__main__':
                        loss_fn,
                        params,
                        args.restore_file)
+
+# %%

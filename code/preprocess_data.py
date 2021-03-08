@@ -35,8 +35,11 @@ def prep_data(data, covariates, data_start, train = True):
     #print("windows: ", windows_per_series.shape)
     #print(windows_per_series)
     total_windows = np.sum(windows_per_series)
+    #x_input shape (389101,19,6)
     x_input = np.zeros((total_windows, window_size, 1 + num_covariates + 1), dtype='float32')
+    #label shape (389101,192)
     label = np.zeros((total_windows, window_size), dtype='float32')
+    #v_input shape (389101,2)
     v_input = np.zeros((total_windows, 2), dtype='float32')
     #cov = 3: ground truth + age + day_of_week + hour_of_day + num_series
     #cov = 4: ground truth + age + day_of_week + hour_of_day + month_of_year + num_series
@@ -62,6 +65,7 @@ def prep_data(data, covariates, data_start, train = True):
             print("data: ", data.shape)
             print("d: ", data[window_start:window_end-1, series].shape)
             '''
+            #the first column of each window is the lag variable
             x_input[count, 1:, 0] = data[window_start:window_end-1, series]
             x_input[count, :, 1:1+num_covariates] = covariates[window_start:window_end, :]
             x_input[count, :, -1] = series
@@ -70,9 +74,12 @@ def prep_data(data, covariates, data_start, train = True):
             if nonzero_sum == 0:
                 v_input[count, 0] = 0
             else:
+                #rescale the data with mean
+                #v_input contains the scale information
                 v_input[count, 0] = np.true_divide(x_input[count, 1:input_size, 0].sum(),nonzero_sum)+1
                 x_input[count, :, 0] = x_input[count, :, 0]/v_input[count, 0]
                 if train:
+                #scale the label with input data
                     label[count, :] = label[count, :]/v_input[count, 0]
             count += 1
     prefix = os.path.join(save_path, 'train_' if train else 'test_')

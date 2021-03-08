@@ -36,7 +36,7 @@ test_end = '2014-09-07 23:00:00'
 pred_days = 7
 given_days = 7
 #The electricity contains hourly time series of the electricity consumptions of 370 customers.
-save_path = os.path.join('../data', save_name)
+save_path = os.path.join('/mnt/File/Data', save_name)
 if not os.path.exists(save_path):
     os.makedirs(save_path)
 csv_path = os.path.join(save_path, name)

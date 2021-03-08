@@ -25,7 +25,8 @@ def train(model: nn.Module,
           test_loader: DataLoader,
           params: utils.Params,
           epoch: int) -> float:
-    '''Train the model on one epoch by batches.
+    '''
+    Train the model on one epoch by batches.
     Args:
         model: (torch.nn.Module) the neural network
         optimizer: (torch.optim) optimizer for parameters of model
