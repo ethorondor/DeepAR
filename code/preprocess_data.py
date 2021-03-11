@@ -79,7 +79,7 @@ def prep_data(data, covariates, data_start, train = True):
                 v_input[count, 0] = np.true_divide(x_input[count, 1:input_size, 0].sum(),nonzero_sum)+1
                 x_input[count, :, 0] = x_input[count, :, 0]/v_input[count, 0]
                 if train:
-                #scale the label with input data
+                #scale the label with input data for training
                     label[count, :] = label[count, :]/v_input[count, 0]
             count += 1
     prefix = os.path.join(save_path, 'train_' if train else 'test_')
